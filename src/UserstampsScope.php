@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Facades\Auth;
+use \MongoDB\BSON\ObjectId;
 
 class UserstampsScope implements Scope
 {
@@ -34,7 +35,7 @@ class UserstampsScope implements Scope
                 return $builder->update($values);
             }
 
-            $values[$builder->getModel()->getUpdatedByColumn()] = Auth::id();
+            $values[$builder->getModel()->getUpdatedByColumn()] = new ObjectId(Auth::id());
 
             return $builder->update($values);
         });
@@ -45,7 +46,7 @@ class UserstampsScope implements Scope
             }
 
             $builder->update([
-                $builder->getModel()->getDeletedByColumn() => Auth::id(),
+                $builder->getModel()->getDeletedByColumn() => ObjectId(Auth::id()),
             ]);
 
             return $builder->delete();
