@@ -3,6 +3,7 @@
 namespace Wildside\Userstamps\Listeners;
 
 use Illuminate\Support\Facades\Auth;
+use \MongoDB\BSON\ObjectId;
 
 class Updating
 {
@@ -18,6 +19,6 @@ class Updating
             return;
         }
 
-        $model->{$model->getUpdatedByColumn()} = Auth::id();
+        $model->{$model->getUpdatedByColumn()} = new ObjectId(Auth::id());
     }
 }
