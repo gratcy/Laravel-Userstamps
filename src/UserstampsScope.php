@@ -46,7 +46,7 @@ class UserstampsScope implements Scope
             }
 
             $builder->update([
-                $builder->getModel()->getDeletedByColumn() => ObjectId(Auth::id()),
+                $builder->getModel()->getDeletedByColumn() => new ObjectId(Auth::id()),
             ]);
 
             return $builder->delete();
